@@ -1,0 +1,13 @@
+version: "3.9"
+name: omnyistproductions
+services:
+  astro:
+    build:
+      context: .
+    restart: always
+    platform: linux/amd64
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
