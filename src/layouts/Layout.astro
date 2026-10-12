@@ -3,20 +3,51 @@ import styles from "./Layout.module.css";
 
 interface Props {
 	title: string;
+	description?: string;
+	image?: string;
 }
 
-const { title } = Astro.props;
+const siteName = "Omnyist Productions";
+const {
+	title,
+	description = "A small collective of four omni-hobbyists building software for an audience of one: ourselves.",
+	image,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = image ? new URL(image, Astro.site) : undefined;
 ---
 
 <!doctype html>
 <html lang="en" class={styles.html}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#000000" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		{imageURL && <meta property="og:image" content={imageURL} />}
+
+		<meta
+			name="twitter:card"
+			content={imageURL ? "summary_large_image" : "summary"}
+		/>
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{imageURL && <meta name="twitter:image" content={imageURL} />}
+
+		<meta name="generator" content={Astro.generator} />
 	</head>
 	<body class={styles.body}>
 		<slot />
