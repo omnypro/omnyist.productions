@@ -12,11 +12,11 @@ const siteName = "Omnyist Productions";
 const {
 	title,
 	description = "A small collective of four omni-hobbyists building software for an audience of one: ourselves.",
-	image,
+	image = "/og-image.png",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const imageURL = image ? new URL(image, Astro.site) : undefined;
+const imageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -33,6 +33,7 @@ const imageURL = image ? new URL(image, Astro.site) : undefined;
 		<meta name="color-scheme" content="dark" />
 		<meta name="theme-color" content="#000000" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={siteName} />
@@ -40,15 +41,15 @@ const imageURL = image ? new URL(image, Astro.site) : undefined;
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
-		{imageURL && <meta property="og:image" content={imageURL} />}
+		<meta property="og:image" content={imageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={`${siteName} logomark`} />
 
-		<meta
-			name="twitter:card"
-			content={imageURL ? "summary_large_image" : "summary"}
-		/>
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		{imageURL && <meta name="twitter:image" content={imageURL} />}
+		<meta name="twitter:image" content={imageURL} />
 
 		<meta name="generator" content={Astro.generator} />
 	</head>

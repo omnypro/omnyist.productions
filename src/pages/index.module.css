@@ -6,21 +6,32 @@
   width: 800px;
   max-width: calc(100% - 2rem);
   color: white;
-  font-size: 20px;
-  line-height: 1.6;
 }
 
 .content {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   height: 100%;
+}
+
+.logo {
+  width: 247px;
+  height: 73px;
+  margin-bottom: 2rem;
+}
+
+.content p {
+  margin: 1.25rem 0 0;
+  font-weight: 300;
 }
 
 .title {
   margin: 0;
   font-size: 2.25rem;
   line-height: 2.5rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .subtitle {
