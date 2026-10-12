@@ -1,0 +1,33 @@
+---
+import Logo from "../assets/logo.svg";
+import type { Product } from "../lib/products";
+import Layout from "./Layout.astro";
+import styles from "./ProductLayout.module.css";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const { name, description, accent } = product.data;
+---
+
+<Layout title={`${name} · Omnyist Productions`} description={description}>
+  <div class={styles.page} style={accent ? { "--accent": accent } : undefined}>
+    <header class={styles.bar}>
+      <div class={styles.barInner}>
+        <a
+          class={styles.logo}
+          href="/"
+          aria-label="Omnyist Productions, back to home"
+          transition:name="logo"
+        >
+          <Logo aria-hidden="true" />
+        </a>
+      </div>
+    </header>
+    <main class={styles.content}>
+      <slot />
+    </main>
+  </div>
+</Layout>

@@ -1,0 +1,70 @@
+---
+import type { ProductDesignProps } from "../lib/products";
+import People from "./People.astro";
+import ProductIcon from "./ProductIcon.astro";
+import styles from "./ProductDefault.module.css";
+
+type Props = ProductDesignProps;
+
+const statusLabels = {
+  released: "Released",
+  beta: "Beta",
+  "in-development": "In development",
+};
+
+const { product, authors, support } = Astro.props;
+const { name, tagline, platforms = [], status, links } = product.data;
+---
+
+<article class={styles.article}>
+  <section class={styles.hero}>
+    <ProductIcon product={product} size={176} />
+    <div class={styles.text}>
+      <h1 class={styles.name}>{name}</h1>
+      {tagline && <p class={styles.tagline}>{tagline}</p>}
+      {
+        (platforms.length > 0 || status) && (
+          <ul class={styles.chips}>
+            {platforms.map((platform) => (
+              <li class={styles.chip}>{platform}</li>
+            ))}
+            {status && (
+              <li class={`${styles.chip} ${styles.status}`}>
+                {statusLabels[status]}
+              </li>
+            )}
+          </ul>
+        )
+      }
+      {
+        links.length > 0 && (
+          <ul class={styles.links}>
+            {links.map((link) => (
+              <li>
+                <a class={styles.link} href={link.href}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+  <dl class={styles.credits}>
+    <div>
+      <dt>Made by</dt>
+      <dd><People people={authors} /></dd>
+    </div>
+    {
+      support.length > 0 && (
+        <div>
+          <dt>With help from</dt>
+          <dd>
+            <People people={support} />
+          </dd>
+        </div>
+      )
+    }
+  </dl>
+</article>

@@ -1,31 +1,48 @@
 ---
+import { getCollection, getEntry, render } from "astro:content";
 import Logo from "../assets/logo.svg";
+import ProductIcon from "../components/ProductIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import styles from "./index.module.css";
+
+const products = (await getCollection("products")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const about = await getEntry("about", "home");
+if (!about) {
+  throw new Error('src/data/about.jsonc must contain an entry with id "home"');
+}
+const { Content: AboutBody } = await render(about);
 ---
 
 <Layout title="Omnyist Productions">
   <main class={styles.main}>
-    <div class={styles.content}>
-      <Logo class={styles.logo} role="img" aria-label="Omnyist Productions" />
-      <h1 class={styles.title}>
-        We build things for ourselves <span class={styles.subtitle}
-          >(and hope you find them useful too)</span
-        >
-      </h1>
-      <p>
-        We are a small collective of four omni-hobbyists: Bryan, Dave, Dan, and
-        Scott, who enjoy building software for an audience of one: <b
-          >ourselves</b
-        >. We're veterans of the Internet, having seen how design and
-        development have evolved over the past 25 years: from Web Standards
-        to... whatever you call the current age.
-      </p>
-      <p>
-        The software we make may seem all over the place when it comes to the
-        needs we cover, but we will always believe that building great software
-        starts with fulfilling your own needs first.
-      </p>
+    <div class={styles.logo} transition:name="logo">
+      <Logo role="img" aria-label="Omnyist Productions" />
     </div>
+    <h1 class={styles.title}>
+      We build things for ourselves <span class={styles.subtitle}
+        >(and hope you find them useful too)</span
+      >
+    </h1>
+    <section aria-labelledby="software">
+      <h2 id="software" class={styles.label}>Software</h2>
+      <ul class={styles.products}>
+        {
+          products.map((product) => (
+            <li>
+              <a class={styles.product} href={`/${product.id}/`}>
+                <ProductIcon product={product} size={96} />
+                <span class={styles.productName}>{product.data.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <section class={styles.about} aria-labelledby="about">
+      <h2 id="about" class={styles.label}>About</h2>
+      <AboutBody />
+    </section>
   </main>
 </Layout>

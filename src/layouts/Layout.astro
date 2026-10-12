@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import styles from "./Layout.module.css";
 
 interface Props {
@@ -52,8 +53,68 @@ const imageURL = new URL(image, Astro.site);
 		<meta name="twitter:image" content={imageURL} />
 
 		<meta name="generator" content={Astro.generator} />
+
+		<ClientRouter />
+		<script>
+			import "../scripts/reveal-origin";
+		</script>
 	</head>
 	<body class={styles.body}>
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		--column: 880px;
+		--transition-duration: 520ms;
+		--transition-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	::view-transition-group(*) {
+		animation-duration: var(--transition-duration);
+		animation-timing-function: var(--transition-ease);
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: var(--transition-duration);
+		animation-timing-function: var(--transition-ease);
+		mix-blend-mode: normal;
+	}
+
+	html[data-astro-transition="forward"]::view-transition-old(root) {
+		animation: none;
+	}
+
+	html[data-astro-transition="forward"]::view-transition-new(root) {
+		animation-name: reveal-open;
+	}
+
+	html[data-astro-transition="back"]::view-transition-old(root) {
+		animation-name: reveal-close;
+		z-index: 2;
+	}
+
+	html[data-astro-transition="back"]::view-transition-new(root) {
+		animation: none;
+	}
+
+	@keyframes reveal-open {
+		from {
+			clip-path: circle(0 at var(--reveal-x) var(--reveal-y));
+		}
+		to {
+			clip-path: circle(var(--reveal-r) at var(--reveal-x) var(--reveal-y));
+		}
+	}
+
+	@keyframes reveal-close {
+		from {
+			clip-path: circle(var(--reveal-r) at var(--reveal-x) var(--reveal-y));
+		}
+		to {
+			clip-path: circle(0 at var(--reveal-x) var(--reveal-y));
+		}
+	}
+</style>

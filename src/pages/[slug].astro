@@ -1,0 +1,46 @@
+---
+import { getCollection, getEntries } from "astro:content";
+import ProductDefault from "../components/ProductDefault.astro";
+import ProductLayout from "../layouts/ProductLayout.astro";
+import { resolveReferences, type Product } from "../lib/products";
+
+export async function getStaticPaths() {
+  const products = await getCollection("products");
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+async function resolve(field: "author" | "support") {
+  const references = product.data[field];
+  const people = await getEntries(references);
+  return resolveReferences(people, references, {
+    product: product.id,
+    field,
+    source: "people.jsonc",
+  });
+}
+
+const authors = await resolve("author");
+const support = await resolve("support");
+
+const designs = import.meta.glob<{ default: typeof ProductDefault }>(
+  "../products/*.astro",
+  {
+    eager: true,
+  },
+);
+const Design =
+  designs[`../products/${product.id}.astro`]?.default ?? ProductDefault;
+---
+
+<ProductLayout product={product}>
+  <Design product={product} authors={authors} support={support} />
+</ProductLayout>

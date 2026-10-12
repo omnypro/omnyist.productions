@@ -1,0 +1,22 @@
+---
+import type { Person } from "../lib/products";
+
+interface Props {
+  people: Person[];
+}
+
+const { people } = Astro.props;
+---
+
+{
+  people.map((person, index) => (
+    <>
+      {index > 0 && ", "}
+      {person.data.url ? (
+        <a href={person.data.url}>{person.data.name}</a>
+      ) : (
+        person.data.name
+      )}
+    </>
+  ))
+}
