@@ -7,6 +7,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "test": "bun test",
     "lint": "oxlint --type-aware",
     "fmt": "oxfmt && prettier --write \"src/**/*.astro\"",
     "fmt:check": "oxfmt --check && prettier --check \"src/**/*.astro\"",
@@ -15,9 +16,11 @@
   "dependencies": {
     "@astrojs/check": "0.9.10",
     "astro": "7.3.8",
+    "jsonc-parser": "^3.3.1",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/bun": "^1.4.3",
     "oxfmt": "^0.72.0",
     "oxlint": "^1.87.0",
     "oxlint-tsgolint": "^7.0.2004",

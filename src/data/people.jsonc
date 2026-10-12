@@ -1,0 +1,7 @@
+// The people credited on products. Product pages link to these by id.
+[
+  { "id": "bryan", "name": "Bryan" },
+  { "id": "dave", "name": "Dave" },
+  { "id": "dan", "name": "Dan" },
+  { "id": "scott", "name": "Scott" },
+]
