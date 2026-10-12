@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
 import Logo from "../assets/logo.svg";
+import Footer from "../components/Footer.astro";
 import ProductIcon from "../components/ProductIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import styles from "./index.module.css";
@@ -44,5 +45,6 @@ const { Content: AboutBody } = await render(about);
       <h2 id="about" class={styles.label}>About</h2>
       <AboutBody />
     </section>
+    <Footer />
   </main>
 </Layout>

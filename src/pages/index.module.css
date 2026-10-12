@@ -61,6 +61,7 @@
 .productName {
   color: #9aa1b2;
   font-size: 0.9375rem;
+  font-weight: 700;
   transition: color 160ms;
 }
 
