@@ -2,8 +2,18 @@
 // Required: id, name, author. Optional: tagline, description, icon, accent,
 // platforms, status (released, beta or in-development), support, links.
 [
-  { "id": "perpetual", "name": "Perpetual", "author": ["bryan"] },
-  { "id": "brewprint", "name": "Brewprint", "author": ["dave"] },
+  {
+    "id": "perpetual",
+    "name": "Perpetual",
+    "author": ["bryan"],
+    "icon": "../assets/products/perpetual/icon.svg",
+  },
+  {
+    "id": "brewprint",
+    "name": "Brewprint",
+    "author": ["dave"],
+    "icon": "../assets/products/brewprint/icon.svg",
+  },
   { "id": "secret-scene", "name": "Secret Scene", "author": ["scott"] },
   { "id": "koushi", "name": "Koushi", "author": ["dan"] },
 ]
