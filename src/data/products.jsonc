@@ -6,14 +6,18 @@
     "id": "perpetual",
     "name": "Perpetual",
     "author": ["bryan"],
+    "tagline": "Repeat once, the way it was always meant to be.",
     "icon": "../assets/products/perpetual/icon.svg",
+    "accent": "#56BDE7",
+    "platforms": ["macOS"]
   },
   {
     "id": "brewprint",
     "name": "Brewprint",
     "author": ["dave"],
     "icon": "../assets/products/brewprint/icon.svg",
+    "platforms": ["iOS"]
   },
-  { "id": "secret-scene", "name": "Secret Scene", "author": ["scott"] },
-  { "id": "koushi", "name": "Koushi", "author": ["dan"] },
+  { "id": "secret-scene", "name": "Secret Scene", "author": ["scott"], "platforms": ["macOS"] },
+  { "id": "koushi", "name": "Koushi", "author": ["dan"], "platforms": ["macOS"] },
 ]

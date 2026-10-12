@@ -1,0 +1,16 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["/src/data/products.jsonc"],
+      "url": "./src/data/schemas/products.schema.json"
+    },
+    {
+      "fileMatch": ["/src/data/people.jsonc"],
+      "url": "./src/data/schemas/people.schema.json"
+    },
+    {
+      "fileMatch": ["/src/data/about.jsonc"],
+      "url": "./src/data/schemas/about.schema.json"
+    }
+  ]
+}

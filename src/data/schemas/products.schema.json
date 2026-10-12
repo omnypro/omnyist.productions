@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "products.jsonc",
+  "description": "Products on the home page, in the order listed. Each id becomes the page at /<id>/.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name", "author"],
+    "properties": {
+      "id": { "$ref": "#/definitions/slug" },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The product's name, shown on the home page and its own page."
+      },
+      "author": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": { "$ref": "#/definitions/person" },
+        "description": "Who made it. At least one person id from people.jsonc."
+      },
+      "tagline": {
+        "type": "string",
+        "description": "One line under the name on the product page."
+      },
+      "description": {
+        "type": "string",
+        "description": "One plain sentence used for the meta description and the social card."
+      },
+      "icon": {
+        "type": "string",
+        "pattern": "^\\.\\./assets/.+\\.(svg|png|jpe?g|webp|avif)$",
+        "description": "Path to the icon image relative to this file, for example ../assets/products/<id>/icon.svg. Without one, the page shows a letter."
+      },
+      "accent": {
+        "type": "string",
+        "description": "A CSS color used for the product page's accents, for example #57e7cd."
+      },
+      "platforms": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": { "type": "string" },
+        "description": "Where it runs, for example macOS or iOS."
+      },
+      "status": {
+        "type": "string",
+        "enum": ["released", "beta", "in-development"],
+        "description": "Shown as a badge on the product page."
+      },
+      "support": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": { "$ref": "#/definitions/person" },
+        "description": "People who helped the author. Person ids from people.jsonc. May be empty."
+      },
+      "links": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "href"],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The button text, for example Download."
+            },
+            "href": {
+              "type": "string",
+              "format": "uri",
+              "description": "Where the button goes."
+            }
+          }
+        },
+        "description": "Buttons on the product page: App Store, download, GitHub and so on."
+      }
+    }
+  },
+  "definitions": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "not": { "enum": ["index", "404"] },
+      "description": "The URL slug: lowercase letters, digits and single hyphens. Never index or 404."
+    },
+    "person": {
+      "enum": ["bryan", "dave", "dan", "scott"],
+      "description": "A person id from people.jsonc."
+    }
+  }
+}

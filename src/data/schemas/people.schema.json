@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "people.jsonc",
+  "description": "The people credited on products. Products refer to them by id.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name"],
+    "properties": {
+      "id": { "$ref": "#/definitions/slug" },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The name shown in a product's credits."
+      },
+      "url": {
+        "type": "string",
+        "format": "uri",
+        "description": "Optional. Makes the name in the credits a link."
+      }
+    }
+  },
+  "definitions": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "not": { "enum": ["index", "404"] },
+      "description": "The id products use to refer to this person: lowercase letters, digits and single hyphens."
+    }
+  }
+}
