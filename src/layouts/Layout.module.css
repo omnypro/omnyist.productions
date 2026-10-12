@@ -1,0 +1,13 @@
+.html {
+  height: 100%;
+  font-family:
+    ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  line-height: 1.5;
+}
+
+.body {
+  height: 100%;
+  margin: 0;
+  background-color: #000;
+}
