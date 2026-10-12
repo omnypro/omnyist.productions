@@ -3,6 +3,10 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://omnyist.productions',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'load'
+  },
   fonts: [
     {
       name: 'Geist',

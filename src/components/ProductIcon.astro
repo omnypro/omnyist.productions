@@ -9,6 +9,9 @@ interface Props {
   size: number;
 }
 
+/** Every instance asks for the same image, twice the largest displayed size, so the home and product pages share one cached file. */
+const SOURCE_SIZE = 352;
+
 const { product, size } = Astro.props;
 const { id, name, icon } = product.data;
 ---
@@ -24,8 +27,9 @@ const { id, name, icon } = product.data;
       <Image
         src={icon}
         alt=""
-        width={size * 2}
-        height={size * 2}
+        width={SOURCE_SIZE}
+        height={SOURCE_SIZE}
+        priority
         class={styles.image}
       />
     ) : (
