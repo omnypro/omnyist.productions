@@ -1,0 +1,253 @@
+/* Tokens come from fullodds.app. --accent is set from the product's data. */
+.root {
+  --bg: #000;
+  --surface: #0a0a0a;
+  --raised: #141414;
+  --border: #1f1f1f;
+  --text: #ededed;
+  --muted: #8a8a8a;
+  --available: #3ecf8e;
+  --warning: #f5a524;
+  --danger: #f2555a;
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hero {
+  padding: clamp(32px, 6vw, 64px) clamp(20px, 5vw, 56px) clamp(40px, 6vw, 64px);
+  background: radial-gradient(
+    700px 320px at 20% 0%,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    transparent 70%
+  );
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.text {
+  display: grid;
+  flex: 1 1 280px;
+  gap: 10px;
+  justify-items: start;
+}
+
+.name {
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.primary,
+.secondary {
+  padding: 9px 18px;
+  border-radius: 9px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.primary {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+.secondary {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.beta {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.lede {
+  max-width: 44ch;
+  margin: 40px 0 28px;
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* A taste of the product: search, the base odds, and the three verdicts. */
+
+.odds {
+  display: grid;
+  gap: 22px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.search {
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--raised);
+  color: var(--muted);
+}
+
+.figure {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.one,
+.slash {
+  color: var(--muted);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.big {
+  color: var(--accent);
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.scale {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--raised);
+}
+
+.scale i {
+  display: block;
+  width: 4px;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 12px 1px var(--accent);
+}
+
+.verdicts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+}
+
+.verdict i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.available {
+  color: var(--available);
+}
+
+.warning {
+  color: var(--warning);
+}
+
+.danger {
+  color: var(--danger);
+}
+
+/* Sections */
+
+.section {
+  padding: 48px clamp(20px, 5vw, 56px);
+  border-top: 1px solid var(--border);
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 28px clamp(20px, 5vw, 56px);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.credits p {
+  margin: 0;
+}
+
+.credits a {
+  color: var(--text);
+}

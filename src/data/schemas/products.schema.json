@@ -29,10 +29,26 @@
         "type": "string",
         "description": "One plain sentence used for the meta description and the social card."
       },
+      "kind": {
+        "type": "string",
+        "enum": ["software", "website"],
+        "default": "software",
+        "description": "software (the default) is an icon on the home page. A website is a browser bar there, and its page is a browser window on a wallpaper."
+      },
+      "url": {
+        "type": "string",
+        "format": "uri",
+        "description": "The live address, shown in a website's browser bar. Required when kind is website."
+      },
       "icon": {
         "type": "string",
         "pattern": "^\\.\\./assets/.+\\.(svg|png|jpe?g|webp|avif)$",
         "description": "Path to the icon image relative to this file, for example ../assets/products/<id>/icon.svg. Without one, the page shows a letter."
+      },
+      "wallpaper": {
+        "type": "string",
+        "pattern": "^\\.\\./assets/.+\\.(svg|png|jpe?g|webp|avif)$",
+        "description": "Websites only: the desktop image behind the browser window, for example ../assets/products/<id>/wallpaper.jpg. Without one, the shared default is used."
       },
       "accent": {
         "type": "string",
@@ -76,7 +92,19 @@
         },
         "description": "Buttons on the product page: App Store, download, GitHub and so on."
       }
-    }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": { "kind": { "const": "website" } },
+          "required": ["kind"]
+        },
+        "then": {
+          "properties": { "url": {} },
+          "required": ["url"]
+        }
+      }
+    ]
   },
   "definitions": {
     "slug": {

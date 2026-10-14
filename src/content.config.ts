@@ -20,22 +20,35 @@ const people = defineCollection({
 const products = defineCollection({
   loader: jsoncLoader("src/data/products.jsonc"),
   schema: ({ image }) =>
-    z.object({
-      id: slug,
-      order: z.number(),
-      name: z.string().min(1),
-      author: z.array(reference("people")).min(1),
-      tagline: z.string().optional(),
-      description: z.string().optional(),
-      icon: image().optional(),
-      accent: z.string().optional(),
-      platforms: z.array(z.string()).optional(),
-      status: z.enum(["released", "beta", "in-development"]).optional(),
-      support: z.array(reference("people")).default([]),
-      links: z
-        .array(z.object({ label: z.string(), href: z.url() }))
-        .default([]),
-    }),
+    z
+      .object({
+        id: slug,
+        order: z.number(),
+        name: z.string().min(1),
+        author: z.array(reference("people")).min(1),
+        tagline: z.string().optional(),
+        description: z.string().optional(),
+        kind: z.enum(["software", "website"]).default("software"),
+        url: z.url().optional(),
+        icon: image().optional(),
+        wallpaper: image().optional(),
+        accent: z.string().optional(),
+        platforms: z.array(z.string()).optional(),
+        status: z.enum(["released", "beta", "in-development"]).optional(),
+        support: z.array(reference("people")).default([]),
+        links: z
+          .array(z.object({ label: z.string(), href: z.url() }))
+          .default([]),
+      })
+      .superRefine((product, ctx) => {
+        if (product.kind === "website" && !product.url) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["url"],
+            message: "a website needs a url",
+          });
+        }
+      }),
 });
 
 const about = defineCollection({

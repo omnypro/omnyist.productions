@@ -1,0 +1,40 @@
+<svg width="2560" height="1600" viewBox="0 0 2560 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="2560" height="1600" fill="#0B1020"/>
+<ellipse cx="2050" cy="260" rx="1100" ry="760" fill="url(#violet)"/>
+<ellipse cx="380" cy="1400" rx="1200" ry="820" fill="url(#teal)"/>
+<ellipse cx="1500" cy="1750" rx="1000" ry="520" fill="url(#amber)"/>
+<path d="M-100 1000C380 760 760 1180 1300 1000S2100 640 2700 860V1700H-100Z" fill="url(#swell1)"/>
+<path d="M-100 1180C420 980 900 1340 1420 1160S2200 900 2700 1060V1700H-100Z" fill="url(#swell2)"/>
+<path d="M-100 1380C480 1240 980 1500 1500 1360S2240 1180 2700 1280V1700H-100Z" fill="url(#swell3)"/>
+<rect width="2560" height="1600" fill="url(#vignette)"/>
+<defs>
+<radialGradient id="violet" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(2050 260) rotate(90) scale(760 1100)">
+<stop stop-color="#6A4CFF" stop-opacity="0.55"/>
+<stop offset="1" stop-color="#6A4CFF" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(380 1400) rotate(90) scale(820 1200)">
+<stop stop-color="#1FB5A8" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#1FB5A8" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="amber" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1500 1750) rotate(90) scale(520 1000)">
+<stop stop-color="#FF9A5C" stop-opacity="0.42"/>
+<stop offset="1" stop-color="#FF9A5C" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="swell1" x1="1280" y1="640" x2="1280" y2="1700" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5B7CFA" stop-opacity="0.28"/>
+<stop offset="1" stop-color="#5B7CFA" stop-opacity="0.04"/>
+</linearGradient>
+<linearGradient id="swell2" x1="1280" y1="900" x2="1280" y2="1700" gradientUnits="userSpaceOnUse">
+<stop stop-color="#8E5CF0" stop-opacity="0.3"/>
+<stop offset="1" stop-color="#8E5CF0" stop-opacity="0.05"/>
+</linearGradient>
+<linearGradient id="swell3" x1="1280" y1="1180" x2="1280" y2="1700" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF8A8A" stop-opacity="0.26"/>
+<stop offset="1" stop-color="#FF8A8A" stop-opacity="0.04"/>
+</linearGradient>
+<radialGradient id="vignette" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1280 800) rotate(90) scale(1100 1700)">
+<stop offset="0.6" stop-color="#05070E" stop-opacity="0"/>
+<stop offset="1" stop-color="#05070E" stop-opacity="0.55"/>
+</radialGradient>
+</defs>
+</svg>

@@ -1,0 +1,248 @@
+---
+import "@fontsource-variable/familjen-grotesk";
+import "@fontsource/space-mono/400.css";
+import "@fontsource/space-mono/700.css";
+import People from "../components/People.astro";
+import ProductIcon from "../components/ProductIcon.astro";
+import type { ProductDesignProps } from "../lib/products";
+import styles from "./brewprint.module.css";
+
+type Props = ProductDesignProps;
+
+const { product, authors } = Astro.props;
+const { name, platforms = [], links } = product.data;
+
+const tickets = [
+  {
+    method: "Espresso",
+    bean: "Rocko Mountain",
+    rows: [
+      ["Dose", "18.0g"],
+      ["Yield", "36.2g"],
+      ["Ratio", "1:2.0"],
+      ["Time", "27s"],
+      ["Grind", "2.2"],
+    ],
+    stars: "★★★★½",
+    rating: "4.5",
+    note: "Syrupy, red-fruit, balanced.",
+    stamp: "TUE · 08:14",
+  },
+  {
+    method: "V60",
+    bean: "Kenya AA",
+    rows: [
+      ["Dose", "15.0g"],
+      ["Yield", "250g"],
+      ["Ratio", "1:16.7"],
+      ["Time", "2:45"],
+      ["Grind", "4.8"],
+    ],
+    stars: "★★★★",
+    rating: "4.0",
+    note: "Bright, blackcurrant, clean.",
+    stamp: "TUE · 07:02",
+  },
+  {
+    method: "Espresso",
+    bean: "Ethiopia Guji",
+    rows: [
+      ["Dose", "18.0g"],
+      ["Yield", "37.0g"],
+      ["Ratio", "1:2.1"],
+      ["Time", "31s"],
+      ["Grind", "2.6"],
+    ],
+    stars: "★★★½",
+    rating: "3.5",
+    note: "A touch sour — go finer.",
+    stamp: "SAT · 08:05",
+  },
+];
+
+const loop = [
+  {
+    n: "01",
+    title: "Log",
+    body: "Dose, yield, time and grind in a few taps, right at the machine.",
+  },
+  {
+    n: "02",
+    title: "Learn",
+    body: "It learns your beans and your grinder, and spots what your best cups have in common.",
+  },
+  {
+    n: "03",
+    title: "Dial in",
+    body: "Get a nudge on where to go next, so you reach delicious in fewer shots.",
+  },
+];
+
+const inside = [
+  {
+    tag: "Log",
+    title: "Every brew, in seconds",
+    body: "Espresso and pour-over, with ratings and tasting notes kept as receipts.",
+  },
+  {
+    tag: "Beans",
+    title: "Beans, at their best",
+    body: "Roast dates, resting windows and how much is left in the bag.",
+  },
+  {
+    tag: "Timer",
+    title: "Guided pour-over, live",
+    body: "Bloom, pours and drawdown as a Live Activity on your Lock Screen.",
+  },
+  {
+    tag: "Stats",
+    title: "Watch yourself get better",
+    body: "Ratings, ratios and extraction times, trending up as you dial in.",
+  },
+];
+---
+
+<div class={styles.backdrop} aria-hidden="true"></div>
+
+<div class={styles.root}>
+  <section class={styles.hero}>
+    <div class={styles.inner}>
+      <div class={styles.copy}>
+        <p class={styles.eyebrow}>
+          {platforms.join(" · ") || "Coffee"} · Beta
+        </p>
+        <h1 class={styles.headline}>
+          <span class={styles.srOnly}>{name}:</span>
+          <span>Brew.</span>
+          <span>Dial in.</span>
+          <span class={styles.hot}>Drink up.</span>
+        </h1>
+        <p class={styles.sub}>
+          {name} is the brewing journal for people who care how their coffee tastes.
+          Log every espresso and pour-over in seconds. It learns your beans and your
+          grinder, and gets you to <em>delicious</em> faster.
+        </p>
+        <div class={styles.actions}>
+          {
+            links.length > 0 ? (
+              links.map((link) => (
+                <a class={styles.primary} href={link.href}>
+                  {link.label}
+                </a>
+              ))
+            ) : (
+              <a class={styles.primary} href="https://getbrewprint.app/#beta">
+                Request access
+              </a>
+            )
+          }
+          <a class={styles.ghost} href="#inside">See what's inside</a>
+        </div>
+        <div class={styles.mark}>
+          <ProductIcon product={product} size={72} />
+          <span>{name}</span>
+        </div>
+      </div>
+
+      <div
+        class={styles.fan}
+        role="img"
+        aria-label="Three brew receipts: two espressos and a V60, each with dose, yield, time, grind and a star rating."
+      >
+        {
+          tickets.map((ticket, i) => (
+            <div class={styles.ticket} style={{ "--k": i - 1 }}>
+              <p class={styles.top}>— BREWPRINT ROASTERY —</p>
+              <p class={styles.method}>
+                {ticket.method}
+                <span>{ticket.bean}</span>
+              </p>
+              <div class={styles.rows}>
+                {ticket.rows.map(([label, value]) => (
+                  <p>
+                    <span>{label}</span>
+                    <span>{value}</span>
+                  </p>
+                ))}
+              </div>
+              <p class={styles.rating}>
+                <span>{ticket.stars}</span>
+                {ticket.rating}
+              </p>
+              <p class={styles.note}>{ticket.note}</p>
+              <p class={styles.stamp}>{ticket.stamp}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class={styles.section}>
+    <div class={styles.inner}>
+      <p class={styles.tag}>The loop</p>
+      <h2 class={styles.h2}>Log it. Learn from it. Dial it in.</h2>
+      <ol class={styles.loop}>
+        {
+          loop.map((step) => (
+            <li class={styles.panel}>
+              <span class={styles.n}>{step.n}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class={styles.section} id="inside">
+    <div class={styles.inner}>
+      <p class={styles.tag}>What's inside</p>
+      <h2 class={styles.h2}>
+        Everything a good cup needs. Nothing it doesn't.
+      </h2>
+      <ul class={styles.inside}>
+        {
+          inside.map((item) => (
+            <li class={styles.panel}>
+              <span class={styles.tag}>{item.tag}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class={styles.section}>
+    <div class={`${styles.inner} ${styles.privacy}`}>
+      <div>
+        <p class={styles.tag}>Private by design</p>
+        <h2 class={styles.h2}>No accounts. No ads. No tracking.</h2>
+        <p class={styles.sub}>
+          Your brews stay on your phone. Nothing leaves it unless you decide it
+          should.
+        </p>
+      </div>
+      <div class={`${styles.ticket} ${styles.receipt}`}>
+        <p class={styles.top}>— DATA RECEIPT —</p>
+        <div class={styles.rows}>
+          <p><span>Accounts</span><span>0</span></p>
+          <p><span>Trackers</span><span>0</span></p>
+          <p><span>Ads</span><span>0</span></p>
+          <p><span>Stored on</span><span>your phone</span></p>
+        </div>
+        <p class={styles.stamp}>THANK YOU · COME AGAIN</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class={styles.credits}>
+    <div class={styles.inner}>
+      <p>Made by <People people={authors} />.</p>
+      <p><a href="https://getbrewprint.app/">getbrewprint.app</a></p>
+    </div>
+  </footer>
+</div>

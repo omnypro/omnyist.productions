@@ -1,0 +1,134 @@
+---
+import "@fontsource-variable/space-grotesk";
+import People from "../components/People.astro";
+import ProductIcon from "../components/ProductIcon.astro";
+import type { ProductDesignProps } from "../lib/products";
+import styles from "./perpetual.module.css";
+
+type Props = ProductDesignProps;
+
+const { product, authors } = Astro.props;
+const { name, tagline, platforms = [], links } = product.data;
+
+const steps = [
+  {
+    label: "Once",
+    title: "The intro plays a single time",
+    body: "Game music opens with a run-up that was never meant to repeat. Perpetual plays it once, then lets it recede.",
+  },
+  {
+    label: "Forever",
+    title: "The loop body never ends",
+    body: "Sample-accurate and seamless, so you can’t hear the join. It comes around as many times as you stay.",
+  },
+  {
+    label: "Counted",
+    title: "Every lap is kept",
+    body: "Each pass is counted and remembered. Come back in a month and it still knows how many times you’ve come around.",
+  },
+];
+
+const features = [
+  {
+    title: "Finds the loop for you",
+    body: "Reads the loop points in the tags when they exist, and scans the audio for them when they don’t.",
+  },
+  {
+    title: "Audition the seam",
+    body: "Hear the join before you keep it. Step the exit and the landing to the nearest attack until it disappears.",
+  },
+  {
+    title: "Honest about doubt",
+    body: "When a seam is uncertain it says so, with a number, and leaves the final call to your ears.",
+  },
+  {
+    title: "Game files, voice by voice",
+    body: "Chiptune files show their console and every chip voice as a lamp that glows with its level.",
+  },
+  {
+    title: "The shelf",
+    body: "Every track you’ve ever kept, ordered by how long you’ve dwelled on it. Pick one and the window takes on its artwork.",
+  },
+  {
+    title: "Stays in the menu bar",
+    body: "Close the window and the loop keeps playing, with the lap count tucked into the menu bar.",
+  },
+];
+---
+
+<div class={styles.backdrop} aria-hidden="true"></div>
+
+<div class={styles.root}>
+  <section class={styles.hero}>
+    <div class={styles.inner}>
+      <div class={styles.heading}>
+        <ProductIcon product={product} size={120} />
+        <div class={styles.text}>
+          <h1 class={styles.name}>{name}</h1>
+          {tagline && <p class={styles.tagline}>{tagline}</p>}
+          {
+            (platforms.length > 0 || links.length > 0) && (
+              <div class={styles.actions}>
+                {links.map((link) => (
+                  <a class={styles.primary} href={link.href}>
+                    {link.label}
+                  </a>
+                ))}
+                {platforms.map((platform) => (
+                  <span class={styles.platform}>{platform}</span>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class={styles.section}>
+    <div class={styles.inner}>
+      <p class={styles.eyebrow}>The idea</p>
+      <h2 class={styles.statement}>
+        Game music is written to loop. Ripped to a file, it plays once and fades
+        out, which is exactly wrong.
+      </h2>
+      <ol class={styles.steps}>
+        {
+          steps.map((step) => (
+            <li class={styles.step}>
+              <span class={styles.stepLabel}>{step.label}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class={styles.section}>
+    <div class={styles.inner}>
+      <p class={styles.eyebrow}>The instrument</p>
+      <h2 class={styles.heading2}>One window. One track. No library.</h2>
+      <ul class={styles.features}>
+        {
+          features.map((feature) => (
+            <li class={styles.feature}>
+              <h3>{feature.title}</h3>
+              <p>{feature.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <footer class={styles.credits}>
+    <div class={styles.inner}>
+      <p>
+        Made by <People people={authors} />. Fourteen years after a shower
+        thought in 2012.
+      </p>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,117 @@
+---
+import People from "../components/People.astro";
+import ProductIcon from "../components/ProductIcon.astro";
+import type { ProductDesignProps } from "../lib/products";
+import styles from "./fullodds.module.css";
+
+type Props = ProductDesignProps;
+
+const { product, authors } = Astro.props;
+const { name, tagline, url, links } = product.data;
+
+const verdicts = [
+  { label: "Available", tone: "available" },
+  { label: "Not yet verified", tone: "warning" },
+  { label: "Event only", tone: "danger" },
+] as const;
+
+const answers = [
+  {
+    title: "Where to catch it",
+    body: "Every route, method and version lock for each Pokémon, game by game, across 25 games and DLC.",
+  },
+  {
+    title: "Whether it can be shiny",
+    body: "A plain verdict per game, with the odds you’ll actually face, so you can check before you start hunting.",
+  },
+  {
+    title: "A living Dex planner",
+    body: "Finds the easiest route into HOME and the purchase that closes the most gaps.",
+  },
+  {
+    title: "Honest data",
+    body: "Each entry names its source and the date it was checked. What isn’t known says so.",
+  },
+];
+---
+
+<div class={styles.root}>
+  <section class={styles.hero}>
+    <div class={styles.heading}>
+      <ProductIcon product={product} size={112} shared={false} />
+      <div class={styles.text}>
+        <h1 class={styles.name}>{name}</h1>
+        {tagline && <p class={styles.tagline}>{tagline}</p>}
+        <div class={styles.actions}>
+          {
+            url && (
+              <a class={styles.primary} href={url}>
+                Open {new URL(url).host}
+              </a>
+            )
+          }
+          {
+            links.map((link) => (
+              <a class={styles.secondary} href={link.href}>
+                {link.label}
+              </a>
+            ))
+          }
+          <span class={styles.beta}>Beta</span>
+        </div>
+      </div>
+    </div>
+
+    <p class={styles.lede}>
+      Where to catch it, and can it be shiny, right now. A reference for Pokémon
+      shiny hunters.
+    </p>
+
+    <div
+      class={styles.odds}
+      role="img"
+      aria-label="The full shiny odds in the main games: 1 in 4,096."
+    >
+      <div class={styles.search}>Search 1,025 Pokémon</div>
+      <div class={styles.figure}>
+        <span class={styles.one}>1</span>
+        <span class={styles.slash}>/</span>
+        <span class={styles.big}>4,096</span>
+      </div>
+      <div class={styles.scale}>
+        <i></i>
+      </div>
+      <ul class={styles.verdicts}>
+        {
+          verdicts.map((verdict) => (
+            <li class={`${styles.verdict} ${styles[verdict.tone]}`}>
+              <i />
+              {verdict.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class={styles.section}>
+    <p class={styles.eyebrow}>What it answers</p>
+    <ul class={styles.answers}>
+      {
+        answers.map((answer) => (
+          <li class={styles.card}>
+            <h2>{answer.title}</h2>
+            <p>{answer.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <footer class={styles.credits}>
+    <p>Made by <People people={authors} />.</p>
+    <p>
+      An unofficial fan project, not affiliated with Nintendo or Game Freak.
+    </p>
+  </footer>
+</div>

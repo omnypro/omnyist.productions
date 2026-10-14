@@ -27,3 +27,17 @@ export function pickOrigin(input: OriginInput): Point {
   }
   return source ?? viewportCenter;
 }
+
+export type Reveal = "grow" | "bar";
+
+export interface RevealInput {
+  /** The page being left is a website's browser window. */
+  leavingWebsite: boolean;
+  /** The click that started the navigation was on a website's bar. */
+  clickedWebsiteBar: boolean;
+}
+
+/** Websites slide their bar into place; everything else grows from its icon. */
+export function pickReveal(input: RevealInput): Reveal {
+  return input.leavingWebsite || input.clickedWebsiteBar ? "bar" : "grow";
+}

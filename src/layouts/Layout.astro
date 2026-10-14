@@ -100,6 +100,117 @@ const imageURL = new URL(image, Astro.site);
 		animation: none;
 	}
 
+	/* Groups that exist on only one page stack above shared ones, so every
+	   shared element (the header, the bars) goes above the wallpaper and the
+	   window body, which sit just over the page itself. */
+	::view-transition-group(*) {
+		z-index: 4;
+	}
+
+	::view-transition-group(root) {
+		z-index: auto;
+	}
+
+	::view-transition-group(wall) {
+		z-index: 1;
+	}
+
+	::view-transition-group(window-body) {
+		z-index: 2;
+	}
+
+	::view-transition-group(logo) {
+		z-index: 5;
+	}
+
+	/* Websites: the bar travels, the wallpaper fades, and the window body rises
+	   up under the bar (and sinks back into it on the way home). */
+	html[data-reveal="bar"][data-astro-transition="forward"]::view-transition-old(root) {
+		z-index: 2;
+		animation: fade-out calc(var(--transition-duration) * 0.45) ease both;
+	}
+
+	html[data-reveal="bar"][data-astro-transition="forward"]::view-transition-new(root) {
+		animation: none;
+	}
+
+	html[data-reveal="bar"][data-astro-transition="back"]::view-transition-old(root) {
+		z-index: auto;
+		animation: none;
+	}
+
+	html[data-reveal="bar"][data-astro-transition="back"]::view-transition-new(root) {
+		animation: fade-in calc(var(--transition-duration) * 0.7) calc(var(--transition-duration) * 0.2) ease both;
+	}
+
+	::view-transition-old(wall),
+	::view-transition-new(wall),
+	::view-transition-old(window-body),
+	::view-transition-new(window-body) {
+		mix-blend-mode: normal;
+		animation-duration: var(--transition-duration);
+		animation-timing-function: var(--transition-ease);
+		animation-fill-mode: both;
+	}
+
+	html[data-astro-transition="forward"]::view-transition-new(wall) {
+		animation-name: fade-in;
+	}
+
+	html[data-astro-transition="forward"]::view-transition-new(window-body) {
+		animation-name: rise;
+		animation-delay: calc(var(--transition-duration) * 0.2);
+	}
+
+	html[data-astro-transition="back"]::view-transition-old(wall) {
+		animation-name: fade-out;
+		animation-delay: calc(var(--transition-duration) * 0.2);
+	}
+
+	html[data-astro-transition="back"]::view-transition-old(window-body) {
+		animation-name: sink;
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(56px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@keyframes sink {
+		from {
+			opacity: 1;
+			transform: none;
+		}
+		to {
+			opacity: 0;
+			transform: translateY(56px);
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+
 	@keyframes reveal-open {
 		from {
 			clip-path: circle(0 at var(--reveal-x) var(--reveal-y));

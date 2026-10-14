@@ -1,13 +1,16 @@
 import type { TransitionBeforePreparationEvent } from "astro:transitions/client";
 import {
   pickOrigin,
+  pickReveal,
   type Point,
   type RecordedIcon,
+  type Reveal,
 } from "../lib/reveal-origin";
 
 const root = document.documentElement;
 let icon: RecordedIcon | undefined;
 let origin: Point = { x: 0, y: 0 };
+let reveal: Reveal = "grow";
 
 function centerOf(element: Element): Point {
   const rect = element.getBoundingClientRect();
@@ -15,6 +18,7 @@ function centerOf(element: Element): Point {
 }
 
 function applyOrigin(): void {
+  root.dataset.reveal = reveal;
   root.style.setProperty("--reveal-x", `${origin.x}px`);
   root.style.setProperty("--reveal-y", `${origin.y}px`);
   root.style.setProperty(
@@ -41,6 +45,11 @@ document.addEventListener("astro:before-preparation", (event) => {
   if (goingHome && navigation.direction === "forward") {
     navigation.direction = "back";
   }
+
+  reveal = pickReveal({
+    leavingWebsite: document.querySelector("[data-website-window]") !== null,
+    clickedWebsiteBar: sourceElement?.closest("[data-website-bar]") != null,
+  });
 
   origin = pickOrigin({
     goingHome,

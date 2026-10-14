@@ -1,41 +1,35 @@
 ---
-import { Image } from "astro:assets";
-import { monogram } from "../lib/monogram";
 import type { Product } from "../lib/products";
 import styles from "./ProductIcon.module.css";
+import ProductIconFace from "./ProductIconFace.astro";
 
 interface Props {
   product: Product;
   size: number;
+  /** Shared icons grow between pages. Pass false for one that travels inside something else, like a browser bar. */
+  shared?: boolean;
 }
 
-/** Every instance asks for the same image, twice the largest displayed size, so the home and product pages share one cached file. */
-const SOURCE_SIZE = 352;
-
-const { product, size } = Astro.props;
-const { id, name, icon } = product.data;
+const { product, size, shared = true } = Astro.props;
 ---
 
-<span
-  class={styles.icon}
-  style={{ "--size": `${size}px` }}
-  transition:name={`icon-${id}`}
-  data-product-icon
->
-  {
-    icon ? (
-      <Image
-        src={icon}
-        alt=""
-        width={SOURCE_SIZE}
-        height={SOURCE_SIZE}
-        priority
-        class={styles.image}
-      />
-    ) : (
-      <span class={styles.monogram} aria-hidden="true">
-        {monogram(name)}
-      </span>
-    )
-  }
-</span>
+{
+  shared ? (
+    <span
+      class={styles.icon}
+      style={{ "--size": `${size}px` }}
+      transition:name={`icon-${product.id}`}
+      data-product-icon
+    >
+      <ProductIconFace product={product} />
+    </span>
+  ) : (
+    <span
+      class={styles.icon}
+      style={{ "--size": `${size}px` }}
+      data-product-icon
+    >
+      <ProductIconFace product={product} />
+    </span>
+  )
+}

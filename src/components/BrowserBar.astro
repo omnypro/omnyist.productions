@@ -1,0 +1,28 @@
+---
+import { barTitle, barUrl, type Product } from "../lib/products";
+import ProductIcon from "./ProductIcon.astro";
+import styles from "./BrowserBar.module.css";
+
+interface Props {
+  product: Product;
+  /** Sits on top of page content, so the bottom edge is square and ruled. */
+  attached?: boolean;
+}
+
+const { product, attached = false } = Astro.props;
+const { url } = product.data;
+---
+
+<div
+  class={`${styles.bar} ${attached ? styles.attached : ""}`}
+  transition:name={`bar-${product.id}`}
+>
+  <span class={styles.lights} aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
+  <span class={styles.address}>
+    <ProductIcon product={product} size={16} shared={false} />
+    <strong class={styles.url}>{url ? barUrl(url) : product.data.name}</strong>
+    <span class={styles.title}>{barTitle(product.data)}</span>
+  </span>
+</div>

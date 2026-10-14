@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import { monogram } from "../lib/monogram";
+import type { Product } from "../lib/products";
+import styles from "./ProductIcon.module.css";
+
+interface Props {
+  product: Product;
+}
+
+/** Every instance asks for the same image, twice the largest displayed size, so the home and product pages share one cached file. */
+const SOURCE_SIZE = 352;
+
+const { name, icon } = Astro.props.product.data;
+---
+
+{
+  icon ? (
+    <Image
+      src={icon}
+      alt=""
+      width={SOURCE_SIZE}
+      height={SOURCE_SIZE}
+      priority
+      class={styles.image}
+    />
+  ) : (
+    <span class={styles.monogram} aria-hidden="true">
+      {monogram(name)}
+    </span>
+  )
+}

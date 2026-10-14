@@ -2,6 +2,7 @@
 import { getCollection, getEntries } from "astro:content";
 import ProductDefault from "../components/ProductDefault.astro";
 import ProductLayout from "../layouts/ProductLayout.astro";
+import WebsiteLayout from "../layouts/WebsiteLayout.astro";
 import { resolveReferences, type Product } from "../lib/products";
 
 export async function getStaticPaths() {
@@ -39,8 +40,9 @@ const designs = import.meta.glob<{ default: typeof ProductDefault }>(
 );
 const Design =
   designs[`../products/${product.id}.astro`]?.default ?? ProductDefault;
+const Frame = product.data.kind === "website" ? WebsiteLayout : ProductLayout;
 ---
 
-<ProductLayout product={product}>
+<Frame product={product}>
   <Design product={product} authors={authors} support={support} />
-</ProductLayout>
+</Frame>

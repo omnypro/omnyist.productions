@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/logo.svg";
+import defaultWallpaper from "../assets/wallpaper.svg";
+import BrowserBar from "../components/BrowserBar.astro";
+import type { Product } from "../lib/products";
+import Layout from "./Layout.astro";
+import frame from "./ProductLayout.module.css";
+import styles from "./WebsiteLayout.module.css";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const { name, description, accent, wallpaper } = product.data;
+---
+
+<Layout title={`${name} · Omnyist Productions`} description={description}>
+  <div class={frame.page} style={accent ? { "--accent": accent } : undefined}>
+    <div class={styles.wallpaper} transition:name="wall">
+      <Image
+        class={styles.wallpaperImage}
+        src={wallpaper ?? defaultWallpaper}
+        alt=""
+        width={2560}
+        priority
+      />
+    </div>
+    <header class={frame.bar}>
+      <div class={frame.barInner}>
+        <a
+          class={frame.logo}
+          href="/"
+          aria-label="Omnyist Productions, back to home"
+          transition:name="logo"
+        >
+          <Logo aria-hidden="true" />
+        </a>
+      </div>
+    </header>
+    <main class={styles.stage}>
+      <div class={styles.window} data-website-window>
+        <BrowserBar product={product} attached />
+        <div class={styles.body} transition:name="window-body">
+          <slot />
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>

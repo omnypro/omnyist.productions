@@ -56,6 +56,9 @@ describe("products.schema.json", () => {
       accent: "#57e7cd",
       platforms: ["macOS", "iOS"],
       status: "beta",
+      kind: "website",
+      url: "https://example.com",
+      wallpaper: "../assets/products/perpetual/wallpaper.jpg",
       support: ["dave", "scott"],
       links: [{ label: "Download", href: "https://example.com/app" }],
     };
@@ -80,8 +83,28 @@ describe("products.schema.json", () => {
       { ...valid, links: [{ label: "Site", href: "not a url" }] },
     ],
     ["an icon outside the assets folder", { ...valid, icon: "/tmp/icon.svg" }],
+    ["an unknown kind", { ...valid, kind: "service" }],
+    ["a website without a url", { ...valid, kind: "website" }],
+    ["a url that is not a URL", { ...valid, url: "not a url" }],
+    [
+      "a wallpaper outside the assets folder",
+      {
+        ...valid,
+        kind: "website",
+        url: "https://x.app",
+        wallpaper: "/tmp/w.jpg",
+      },
+    ],
   ])("rejects %s", (_name, entry) => {
     expect(problems("products", [entry]).length).toBeGreaterThan(0);
+  });
+
+  test("accepts a website with a url", () => {
+    expect(
+      problems("products", [
+        { ...valid, kind: "website", url: "https://fullodds.app" },
+      ]),
+    ).toEqual([]);
   });
 
   test("rejects a file that is not an array", () => {

@@ -1,6 +1,8 @@
 // Products on the home page, in this order. Each id becomes the page at /<id>/.
 // Required: id, name, author. Optional: tagline, description, icon, accent,
 // platforms, status (released, beta or in-development), support, links.
+// kind is software (the default) or website. A website also needs a url, and
+// can have a wallpaper image for its browser-window page.
 [
   {
     "id": "perpetual",
@@ -16,8 +18,21 @@
     "name": "Brewprint",
     "author": ["dave"],
     "icon": "../assets/products/brewprint/icon.svg",
+    "accent": "#EC9F6F",
     "platforms": ["iOS"]
   },
   { "id": "secret-scene", "name": "Secret Scene", "author": ["scott"], "platforms": ["macOS"] },
   { "id": "koushi", "name": "Koushi", "author": ["dan"], "platforms": ["macOS"] },
+  {
+    "id": "fullodds",
+    "name": "Full Odds",
+    "kind": "website",
+    "url": "https://fullodds.app",
+    "author": ["dave"],
+    "tagline": "The Shiny Hunter's Field Guide",
+    "description": "Shiny hunting tracker with a live Pokédex: where to catch it, and whether it can be shiny, right now.",
+    "icon": "../assets/products/fullodds/icon.svg",
+    "accent": "#F2C230",
+    "status": "beta"
+  },
 ]

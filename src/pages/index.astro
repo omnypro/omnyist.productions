@@ -2,12 +2,14 @@
 import { getCollection, getEntry, render } from "astro:content";
 import Logo from "../assets/logo.svg";
 import Footer from "../components/Footer.astro";
+import BrowserBar from "../components/BrowserBar.astro";
 import ProductIcon from "../components/ProductIcon.astro";
 import Layout from "../layouts/Layout.astro";
+import { groupByKind } from "../lib/products";
 import styles from "./index.module.css";
 
-const products = (await getCollection("products")).sort(
-  (a, b) => a.data.order - b.data.order,
+const { software, website: websites } = groupByKind(
+  await getCollection("products"),
 );
 const about = await getEntry("about", "home");
 if (!about) {
@@ -30,7 +32,7 @@ const { Content: AboutBody } = await render(about);
       <h2 id="software" class={styles.label}>Software</h2>
       <ul class={styles.products}>
         {
-          products.map((product) => (
+          software.map((product) => (
             <li>
               <a class={styles.product} href={`/${product.id}/`}>
                 <ProductIcon product={product} size={96} />
@@ -41,6 +43,29 @@ const { Content: AboutBody } = await render(about);
         }
       </ul>
     </section>
+    {
+      websites.length > 0 && (
+        <section class={styles.websites} aria-labelledby="websites">
+          <h2 id="websites" class={styles.label}>
+            Websites
+          </h2>
+          <ul class={styles.sites}>
+            {websites.map((product) => (
+              <li>
+                <a
+                  class={styles.site}
+                  data-website-bar
+                  href={`/${product.id}/`}
+                  aria-label={product.data.name}
+                >
+                  <BrowserBar product={product} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
     <section class={styles.about} aria-labelledby="about">
       <h2 id="about" class={styles.label}>About</h2>
       <AboutBody />

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { pickOrigin } from "./reveal-origin";
+import { pickOrigin, pickReveal } from "./reveal-origin";
 
 const viewportCenter = { x: 500, y: 400 };
 const icon = { viewport: { x: 100, y: 50 }, page: { x: 100, y: 450 } };
@@ -38,5 +38,25 @@ describe("pickOrigin", () => {
     expect(
       pickOrigin({ goingHome: true, landsAtTop: false, viewportCenter }),
     ).toEqual(viewportCenter);
+  });
+});
+
+describe("pickReveal", () => {
+  test("slides the bar when a website's bar was clicked", () => {
+    expect(pickReveal({ leavingWebsite: false, clickedWebsiteBar: true })).toBe(
+      "bar",
+    );
+  });
+
+  test("slides the bar back when leaving a website page", () => {
+    expect(pickReveal({ leavingWebsite: true, clickedWebsiteBar: false })).toBe(
+      "bar",
+    );
+  });
+
+  test("grows from the icon for software", () => {
+    expect(
+      pickReveal({ leavingWebsite: false, clickedWebsiteBar: false }),
+    ).toBe("grow");
   });
 });
